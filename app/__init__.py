@@ -12,7 +12,9 @@ from flask_dance.contrib.github import make_github_blueprint, github
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    
+    
     # TODO: what's the difference between these two lines?
     app.config.from_mapping(
         SECRET_KEY='dev',
