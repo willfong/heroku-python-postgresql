@@ -1,16 +1,13 @@
 import os
 import psycopg2
 import psycopg2.extras
-import click
-from flask import current_app, g
-from flask.cli import with_appcontext
+from flask import g
 
 
 def db_get():
-    print("Initializing DB: {}".format(os.environ.get('DATABASE_URL')))
     if 'db' not in g:
+        print("Initializing DB: {}".format(os.environ.get('DATABASE_URL')))
         g.db = psycopg2.connect(os.environ.get('DATABASE_URL'))
-
     return g.db
 
 

@@ -1,5 +1,7 @@
-DROP TABLE IF EXISTS users;
+-- Drop tables in reverse order they are created
+
 DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
