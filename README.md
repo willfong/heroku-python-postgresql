@@ -24,4 +24,4 @@ Use GitHub for authentication by creating an app here: https://github.com/settin
 
 ## Python Packages
 
-pip install Flask Flask-Dance psycopg2-binary
+pip install Flask Flask-Dance psycopg2-binary waitress

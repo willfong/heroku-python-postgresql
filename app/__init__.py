@@ -35,6 +35,7 @@ def create_app(test_config=None):
             return redirect(url_for("github.login"))
         resp = github.get("/user")
         assert resp.ok
+        print(resp.json())
         return "You are @{login} on GitHub".format(login=resp.json()["login"])
 
 
