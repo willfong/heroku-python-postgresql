@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import psycopg2.extras
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
@@ -19,16 +20,10 @@ def db_close(e=None):
     if db is not None:
         db.close()
 
-def db_init():
-    db = db_get()
-    cur = db.cursor()
-    with current_app.open_resource('schema.sql') as f:
-        cur.execute(f.read().decode('utf8'))
 
-
-def db_read(query, params=None, one=True):
+def read(query, params=None, one=True):
     db = db_get()
-    cur = db.cursor()
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(query, params)
     if one:
         return cur.fetchone()
@@ -36,21 +31,9 @@ def db_read(query, params=None, one=True):
         return cur.fetchall()
 
 
-def db_write(query, params=None):
+def write(query, params=None):
     db = db_get()
     cur = db.cursor()
     cur.execute(query, params)
     db.commit()
     return True
-
-
-@click.command('db-init')
-@with_appcontext
-def db_init_command():
-    db_init()
-    click.echo('Initialized the database.')
-
-
-def init_app(app):
-    app.teardown_appcontext(db_close)
-    app.cli.add_command(db_init_command)
