@@ -22,3 +22,6 @@ def index():
     users = db.read("SELECT COUNT(*) AS total FROM users")
     return render_template('index.html', login=oauth_resp["login"], total_users=users["total"])
 
+@blueprint.route("/add", methods=["POST"])
+def add_post():
+    

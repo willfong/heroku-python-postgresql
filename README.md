@@ -1,5 +1,7 @@
 # Boilerplate: Heroku / Python / Postgresql
 
+This is a simple, opinionated, framework for quicking turning a concept into something to see. 
+
 ## Getting Started
 
 To get started with this boilerplate, you will need to perform the following actions:
@@ -59,6 +61,28 @@ git push heroku master
 ```
 
 You should be good to go from here.
+
+## How It Works
+
+### Adding New Routes
+
+
+### Making Database Queries
+
+There are helper functions in `db.py` called `read()` and `write()`. The first argument is the actual SQL query, the second is optional and is a list of parameters to pass.
+
+```python
+query = "INSERT INTO users (name, language) VALUES (%s, %s)"
+params = ['willfong', 'python']
+db.write(query, params)
+
+query = "SELECT id, name FROM users WHERE active = 1 AND language = %s"
+params = ['Python']
+users = db.read(query, params)
+
+for user in users:
+    print("Name: {} (ID: {})".format(user["name"], user["id"]))
+```
 
 ## Python Packages
 
