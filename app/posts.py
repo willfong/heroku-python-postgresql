@@ -16,6 +16,7 @@ def index():
     oauth_resp = resp.json()
     # TODO: Should be checking for errors from DB
     query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
+    # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
     params = (
         oauth_resp["login"],
         oauth_resp.get("name", "") or "",
