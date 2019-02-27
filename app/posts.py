@@ -14,13 +14,12 @@ def index():
     resp = github.get("/user")
     assert resp.ok
     oauth_resp = resp.json()
-    print(oauth_resp)
     # TODO: Should be checking for errors from DB
     query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
     params = (
         oauth_resp["login"],
-        oauth_resp.get("name", ""),
-        oauth_resp.get("avatar_url", ""),
+        oauth_resp.get("name", "") or "",
+        oauth_resp.get("avatar_url", "") or "",
     )
     session["user_id"] = db.write(query, params, returning=True)
 
