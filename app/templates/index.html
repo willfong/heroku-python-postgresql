@@ -3,10 +3,33 @@
 {% block content %}
     <main role="main" class="flex-shrink-0">
         <div class="container">
-            <h1 class="mt-5">Boilerplate Fun</h1>
-            <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS.</p>
-            <p>Use <a href="/docs/4.3/examples/sticky-footer-navbar/">the sticky footer with a fixed navbar</a> if need be, too.</p>
-            <p>You are @{{login}} on GitHub! There are currently {{total_users}} users registered.</p>
+            <h1 class="mt-5">My Message Board</h1>
+            <p>Logged in as @{{login}} on GitHub! There are currently {{total_users}} users registered on this site.</p>
+            <form action="{{url_for('posts.add_post')}}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="message" placeholder="Say something!">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success" type="submit">Post</button>
+                    </div>
+                </div>
+            </form>
+            {% if posts|length > 0 %}
+            {% for post in posts %}
+                <div class="card">
+                    <div class="card-header">
+                        {{post.name}} ({{post.username}})
+                    </div>
+                    <div class="card-body">
+                      <blockquote class="blockquote mb-0">
+                        <p>{{post.message}}</p>
+                        <footer class="blockquote-footer">{{post.created}}</footer>
+                      </blockquote>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+            <p>There are no posts yet!</p>
+            {% endif %}
         </div>
     </main>
 {% endblock %}

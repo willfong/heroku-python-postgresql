@@ -1,10 +1,16 @@
 # Boilerplate: Heroku / Python / Postgresql
 
-This is a simple, opinionated, framework for quicking turning a concept into something to see. 
+This is a simple, opinionated, framework for quicking turning a concept in your head onto something you can see. This project was started to help make kickstarting new ideas much easier. This is still a work in progress, rushed out to meet other deadlines. As such, comments and suggestions are very much welcomed. 
 
 ## Getting Started
 
 To get started with this boilerplate, you will need to perform the following actions:
+
+
+### Prerequisites
+
+- Heroku CLI Installed and Logged In: <https://devcenter.heroku.com/articles/heroku-cli>
+- Python 3 with venv module: <https://docs.python.org/3/library/venv.html>
 
 ### Initial Setup
 

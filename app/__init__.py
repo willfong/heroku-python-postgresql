@@ -1,6 +1,5 @@
 import os
 from . import db
-
 from flask import Flask, redirect, url_for, render_template
 
 # This is for Heroku

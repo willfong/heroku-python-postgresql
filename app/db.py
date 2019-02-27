@@ -13,24 +13,28 @@ def db_get():
 
 def db_close(e=None):
     db = g.pop('db', None)
-
     if db is not None:
         db.close()
 
 
-def read(query, params=None, one=True):
+def read(query, params=None, one=False):
     db = db_get()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(query, params)
+    #TODO: Need to add error handling
     if one:
         return cur.fetchone()
     else:
         return cur.fetchall()
 
 
-def write(query, params=None):
+def write(query, params=None, returning=False):
     db = db_get()
     cur = db.cursor()
     cur.execute(query, params)
     db.commit()
-    return True
+    #TODO: Need to add error handling
+    if returning:
+        return cur.fetchone()[0]
+    else:
+        return True
