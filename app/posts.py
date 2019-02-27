@@ -14,7 +14,7 @@ def index():
     resp = github.get("/user")
     assert resp.ok
     oauth_resp = resp.json()
-
+    print(oauth_resp)
     # TODO: Should be checking for errors from DB
     query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
     params = (
