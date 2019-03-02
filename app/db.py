@@ -20,8 +20,12 @@ def db_close(e=None):
 def read(query, params=None, one=False):
     db = db_get()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute(query, params)
-    # TODO: Need to add error handling
+    # TODO: Need to add better error handling
+    try:
+        cur.execute(query, params)
+    except psycopg2.Error as e:
+        print("Database error: {}\n{}".format(query, e))
+        return False
     if one:
         return cur.fetchone()
     else:
@@ -31,9 +35,13 @@ def read(query, params=None, one=False):
 def write(query, params=None, returning=False):
     db = db_get()
     cur = db.cursor()
-    cur.execute(query, params)
-    db.commit()
-    # TODO: Need to add error handling
+    # TODO: Need to add better error handling
+    try:
+        cur.execute(query, params)
+        db.commit()
+    except psycopg2.Error as e:
+        print("Database error: {}\n{}".format(query, e))
+        return False
     if returning:
         return cur.fetchone()[0]
     else:
