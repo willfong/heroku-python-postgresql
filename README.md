@@ -50,6 +50,14 @@ heroku config:set GITHUB_CLIENT_SECRET=abc...890
 
 Replace `123...xyz` and `abc...890` with your appropriate keys. Duh...
 
+### Local Development Settings
+
+We want to make a few configuration changes to our local development environment to make programming easier:
+
+- Flask Debug
+- OAuth2 HTTPS Security - OAUTHLIB_INSECURE_TRANSPORT=1
+- Print Log - PYTHONUNBUFFERED=True
+
 ### Start It Up
 
 ```shell
