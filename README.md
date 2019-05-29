@@ -39,6 +39,8 @@ You can run this as many times as you need
 
 Use GitHub for authentication by creating an app here: <https://github.com/settings/developers>
 
+Set up two applications, one for production and one for staging. Heroku will use the Production account, and your local development will use the staging account. This is because GitHub OAuth has an authorization callback, which redirects to only one address. Production redirects to Heroku, and Staging will redirect to localhost.
+
 Once you set up the application, you need to provide this to your local environment and Heroku:
 
 ```shell
