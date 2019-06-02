@@ -17,10 +17,16 @@ To get started with this boilerplate, you will need to perform the following act
 ```shell
 git clone https://github.com/willfong/heroku-python-postgresql.git my-new-project
 cd my-new-project
+rm -rf .git
+git init
+git add .
+git commit -m "Boilerplate Commit"
+git remote add origin git@github.com:<your URL>
+git push -u origin master
 python3 -m venv venv
 . venv/bin/activate
-pip install -r requirements
-heroku create
+pip install -r requirements.txt
+heroku create my-new-project
 heroku addons:create heroku-postgresql:hobby-dev
 heroku config:get DATABASE_URL -s >> .env
 ```
