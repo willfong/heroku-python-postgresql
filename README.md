@@ -23,6 +23,7 @@ git add .
 git commit -m "Boilerplate Commit"
 git remote add origin git@github.com:<your URL>
 git push -u origin master
+cp env-sample .env
 python3 -m venv venv
 . venv/bin/activate
 pip install -r requirements.txt
