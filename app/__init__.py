@@ -25,8 +25,8 @@ def create_app():
     )
     app.register_blueprint(blueprint, url_prefix="/login")
 
-    from . import posts
+    from . import index
 
-    app.register_blueprint(posts.blueprint)
+    app.register_blueprint(index.blueprint)
 
     return app

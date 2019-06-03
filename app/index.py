@@ -4,11 +4,11 @@ from flask_dance.contrib.github import github
 from . import db
 
 
-blueprint = Blueprint("posts", __name__, url_prefix="/")
+blueprint = Blueprint("index", __name__, url_prefix="/")
 
 
 @blueprint.route("/")
-def index():
+def home():
     if not github.authorized:
         return redirect(url_for("github.login"))
     resp = github.get("/user")
@@ -42,4 +42,4 @@ def add_post():
     params = (session["user_id"], message)
     db.write(query, params)
     flash("Successfully posted message", "success")
-    return redirect(url_for("posts.index"))
+    return redirect(url_for("index.home"))
