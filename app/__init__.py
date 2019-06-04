@@ -22,6 +22,7 @@ def start_app():
     from . import auth
     a.register_blueprint(auth.blueprint)
     a.register_blueprint(auth.login_github)
+    a.register_blueprint(auth.login_google)
 
     from . import app
     

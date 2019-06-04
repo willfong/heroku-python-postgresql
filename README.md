@@ -65,6 +65,7 @@ We want to make a few configuration changes to our local development environment
 
 - Flask Debug
 - OAuth2 HTTPS Security - OAUTHLIB_INSECURE_TRANSPORT=1
+- For Google OAUTH - OAUTHLIB_RELAX_TOKEN_SCOPE=1
 - Print Log - PYTHONUNBUFFERED=True
 
 ### Start It Up
@@ -127,3 +128,4 @@ This project was created from the following references:
 - <https://devcenter.heroku.com/articles/getting-started-with-python>
 - <http://initd.org/psycopg/docs/usage.html#passing-parameters-to-sql-queries>
 - <https://github.com/singingwolfboy/flask-dance-github>
+- <https://github.com/singingwolfboy/flask-dance-google>
