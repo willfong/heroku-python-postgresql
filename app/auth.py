@@ -1,9 +1,10 @@
 import os
-from flask import Blueprint, redirect, url_for
+from flask import Blueprint, redirect, url_for, flash, session
 from flask_dance.contrib.github import make_github_blueprint, github
 
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
+
 login_github = make_github_blueprint(
     client_id=os.environ.get("GITHUB_CLIENT_ID"),
     client_secret=os.environ.get("GITHUB_CLIENT_SECRET"),
@@ -17,3 +18,11 @@ def login_required(func):
         return func()
 
     return wrapper
+
+
+@blueprint.route("/logout")
+def logout():
+    session.clear()
+    flash("Successfully logged out!", "success")
+    return redirect(url_for("index.home"))
+
