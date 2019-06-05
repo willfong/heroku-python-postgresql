@@ -16,16 +16,15 @@ def start_app():
     a.secret_key = "supersekrit12345"
 
     from . import index
-
     a.register_blueprint(index.blueprint)
 
     from . import auth
     a.register_blueprint(auth.blueprint)
     a.register_blueprint(auth.login_github)
     a.register_blueprint(auth.login_google)
+    a.register_blueprint(auth.login_facebook)
 
     from . import app
-    
     a.register_blueprint(app.blueprint)
 
     return a

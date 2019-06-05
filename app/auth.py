@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, redirect, url_for, flash, session, render_template
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from . import db
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
@@ -16,6 +17,12 @@ login_google = make_google_blueprint(
     client_id=os.environ.get("GOOGLE_CLIENT_ID"),
     client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
     redirect_to="auth.oauth_google"
+)
+
+login_facebook = make_facebook_blueprint(
+    client_id=os.environ.get("FACEBOOK_CLIENT_ID"),
+    client_secret=os.environ.get("FACEBOOK_CLIENT_SECRET"),
+    redirect_to="auth.oauth_facebook"
 )
 
 
@@ -46,7 +53,7 @@ def oauth_github():
     query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
     # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
     params = (
-        oauth_resp["login"],
+        oauth_resp.get("login"),
         oauth_resp.get("name", "") or "",
         oauth_resp.get("avatar_url", "") or "",
     )
@@ -71,6 +78,25 @@ def oauth_google():
     )
     session["user_id"] = db.write(query, params, returning=True)
     flash("Successfully logged in via GitHub!", "success")
+    return redirect(url_for("app.home"))
+
+
+@blueprint.route("/oauth/facebook")
+def oauth_facebook():
+    resp = facebook.get("/me")
+    assert resp.ok
+    oauth_resp = resp.json()
+    print(oauth_resp)
+    # TODO: Should be checking for errors from DB
+    query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
+    # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
+    params = (
+        oauth_resp.get("login"),
+        oauth_resp.get("name", "") or "",
+        oauth_resp.get("avatar_url", "") or "",
+    )
+    session["user_id"] = db.write(query, params, returning=True)
+    flash("Successfully logged in via Facebook!", "success")
     return redirect(url_for("app.home"))
 
 
