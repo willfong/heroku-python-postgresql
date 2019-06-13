@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <p>Logged in as @{{login}} on GitHub! There are currently {{total_users}} users registered on this site.</p>
     <form action="{{url_for('app.add_post')}}" method="post">
         <div class="input-group mb-3">
             <input type="text" class="form-control" name="message" placeholder="Say something!">

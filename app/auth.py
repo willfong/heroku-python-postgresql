@@ -48,36 +48,34 @@ def oauth_github():
     resp = github.get("/user")
     assert resp.ok
     oauth_resp = resp.json()
-    print(oauth_resp)
+    print("GitHub Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
+    query = "INSERT INTO users (github_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (github_id) DO UPDATE SET last_login = NOW() RETURNING id"
     # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
     params = (
-        oauth_resp.get("login"),
+        oauth_resp.get("id"),
         oauth_resp.get("name", "") or "",
         oauth_resp.get("avatar_url", "") or "",
     )
     session["user_id"] = db.write(query, params, returning=True)
-    flash("Successfully logged in via GitHub!", "success")
+    flash(f"Successfully logged in via GitHub! {session['user_id']}", "success")
     return redirect(url_for("app.home"))
 
 
 @blueprint.route("/oauth/google")
 def oauth_google():
     resp = google.get("/plus/v1/people/me")
-    print(resp)
     oauth_resp = resp.json()
-    print(oauth_resp)
+    print("Google Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
-    # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
+    query = "INSERT INTO users (google_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (google_id) DO UPDATE SET last_login = NOW() RETURNING id"
     params = (
-        oauth_resp.get("login"),
-        oauth_resp.get("name", "") or "",
-        oauth_resp.get("avatar_url", "") or "",
+        oauth_resp.get("id"),
+        oauth_resp.get("displayName", "") or "",
+        oauth_resp.get("image", "").get("url") or "",
     )
     session["user_id"] = db.write(query, params, returning=True)
-    flash("Successfully logged in via GitHub!", "success")
+    flash("Successfully logged in via Google!", "success")
     return redirect(url_for("app.home"))
 
 
@@ -86,14 +84,12 @@ def oauth_facebook():
     resp = facebook.get("/me")
     assert resp.ok
     oauth_resp = resp.json()
-    print(oauth_resp)
+    print("Facebook Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (username, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (username) DO UPDATE SET last_login = NOW() RETURNING id"
-    # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
+    query = "INSERT INTO users (facebook_id, name, last_login) VALUES (%s, %s, NOW()) ON CONFLICT (facebook_id) DO UPDATE SET last_login = NOW() RETURNING id"
     params = (
-        oauth_resp.get("login"),
-        oauth_resp.get("name", "") or "",
-        oauth_resp.get("avatar_url", "") or "",
+        oauth_resp.get("id"),
+        oauth_resp.get("name", "") or ""
     )
     session["user_id"] = db.write(query, params, returning=True)
     flash("Successfully logged in via Facebook!", "success")

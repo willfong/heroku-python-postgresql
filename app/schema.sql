@@ -1,18 +1,19 @@
--- Drop tables in reverse order they are created
-
-DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS users;
-
-
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  avatar TEXT NOT NULL,
+  github_id TEXT,
+  google_id TEXT,
+  facebook_id TEXT,
+  name TEXT NOT NULL DEFAULT '',
+  avatar TEXT NOT NULL DEFAULT '',
   last_login TIMESTAMPTZ
 );
+CREATE UNIQUE INDEX ON users (github_id);
+CREATE UNIQUE INDEX ON users (google_id);
+CREATE UNIQUE INDEX ON users (facebook_id);
 
 
+DROP TABLE IF EXISTS posts CASCADE;
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
   author_id INTEGER NOT NULL,

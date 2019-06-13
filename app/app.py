@@ -13,7 +13,7 @@ def home():
         return redirect(url_for("auth.login"))
     users = db.read("SELECT COUNT(*) AS total FROM users", one=True)
     posts = db.read(
-        "SELECT u.name AS name, u.username AS username, u.avatar AS avatar, p.message AS message, p.created AS created FROM posts AS p INNER JOIN users AS u ON p.author_id = u.id ORDER BY p.created DESC LIMIT 20"
+        "SELECT u.name AS name, u.avatar AS avatar, p.message AS message, p.created AS created FROM posts AS p INNER JOIN users AS u ON p.author_id = u.id ORDER BY p.created DESC LIMIT 20"
     )
 
     return render_template(
