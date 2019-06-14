@@ -29,10 +29,8 @@ login_facebook = make_facebook_blueprint(
 # TODO: Don't know why my decorator doesn't work.
 def login_required(func):
     def wrapper():
-        print("Starting login_required")
         if 'user_id' not in session:
             return redirect(url_for("auth.login"))
-        print("Already logged in...")
         return func()
 
     return wrapper
@@ -40,7 +38,7 @@ def login_required(func):
 
 @blueprint.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("login.html", loginpage=True)
 
 
 @blueprint.route("/oauth/github")
@@ -58,7 +56,7 @@ def oauth_github():
         oauth_resp.get("avatar_url", "") or "",
     )
     session["user_id"] = db.write(query, params, returning=True)
-    flash(f"Successfully logged in via GitHub! {session['user_id']}", "success")
+    flash("Successfully logged in via GitHub!", "success")
     return redirect(url_for("app.home"))
 
 

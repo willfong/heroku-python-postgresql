@@ -13,12 +13,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='layout.css') }}" rel="stylesheet">
+    {% block headers %}{% endblock %}
   </head>
 
   <body class="d-flex flex-column h-100">
     <main role="main" class="flex-shrink-0">
         <div class="container">
             <h1 class="mt-5">My Message Board</h1>
+            {% if not loginpage %}
             <p class="text-right">
               {% if session['user_id'] %}
               <a href="{{url_for('auth.logout')}}">Logout</a>
@@ -26,6 +28,7 @@
               <a href="{{url_for('auth.login')}}">Login</a>
               {% endif %}
             </p>
+            {% endif %}
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
