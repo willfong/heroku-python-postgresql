@@ -48,14 +48,14 @@ def oauth_github():
     oauth_resp = resp.json()
     print("GitHub Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (github_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (github_id) DO UPDATE SET last_login = NOW() RETURNING id"
+    query = "INSERT INTO users (github_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (github_id) DO UPDATE SET last_login = NOW() RETURNING id, name"
     # GitHub/Oauth returns keys with values of None. Can't use .get() defaults, need to use or.
     params = (
         oauth_resp.get("id"),
         oauth_resp.get("name", "") or "",
         oauth_resp.get("avatar_url", "") or "",
     )
-    session["user_id"] = db.write(query, params, returning=True)
+    session["user_id"], session["user_name"] = db.write(query, params, returning=True)
     flash("Successfully logged in via GitHub!", "success")
     return redirect(url_for("app.home"))
 
@@ -66,13 +66,13 @@ def oauth_google():
     oauth_resp = resp.json()
     print("Google Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (google_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (google_id) DO UPDATE SET last_login = NOW() RETURNING id"
+    query = "INSERT INTO users (google_id, name, avatar, last_login) VALUES (%s, %s, %s, NOW()) ON CONFLICT (google_id) DO UPDATE SET last_login = NOW() RETURNING id, name"
     params = (
         oauth_resp.get("id"),
         oauth_resp.get("displayName", "") or "",
         oauth_resp.get("image", "").get("url") or "",
     )
-    session["user_id"] = db.write(query, params, returning=True)
+    session["user_id"], session["user_name"] = db.write(query, params, returning=True)
     flash("Successfully logged in via Google!", "success")
     return redirect(url_for("app.home"))
 
@@ -84,12 +84,12 @@ def oauth_facebook():
     oauth_resp = resp.json()
     print("Facebook Response:\n{}".format(oauth_resp))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (facebook_id, name, last_login) VALUES (%s, %s, NOW()) ON CONFLICT (facebook_id) DO UPDATE SET last_login = NOW() RETURNING id"
+    query = "INSERT INTO users (facebook_id, name, last_login) VALUES (%s, %s, NOW()) ON CONFLICT (facebook_id) DO UPDATE SET last_login = NOW() RETURNING id, name"
     params = (
         oauth_resp.get("id"),
         oauth_resp.get("name", "") or ""
     )
-    session["user_id"] = db.write(query, params, returning=True)
+    session["user_id"], session["user_name"] = db.write(query, params, returning=True)
     flash("Successfully logged in via Facebook!", "success")
     return redirect(url_for("app.home"))
 

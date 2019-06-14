@@ -43,6 +43,6 @@ def write(query, params=None, returning=False):
         print("Database error: {}\n{}".format(query, e))
         return False
     if returning:
-        return cur.fetchone()[0]
+        return cur.fetchone()
     else:
         return True
