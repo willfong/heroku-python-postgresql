@@ -120,6 +120,17 @@ As usual, be careful when you install packages from PyPI. Verify the package nam
 
 <https://incolumitas.com/2016/06/08/typosquatting-package-managers/ >
 
+
+## OAuth Setup
+
+GitHub: https://github.com/settings/applications/new
+Facebook: https://developers.facebook.com/ 
+https://developers.facebook.com/apps/{APP_ID}/settings/basic/
+Google: https://console.developers.google.com/apis/dashboard
+http://localhost:5000/google/authorized
+
+
+
 ## Reference Documents
 
 This project was created from the following references:
