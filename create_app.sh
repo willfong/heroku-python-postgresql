@@ -99,3 +99,6 @@ heroku git:remote --app $input_appname
 echo "Setting up Heroku Database..."
 heroku addons:create heroku-postgresql:hobby-dev
 heroku config:get DATABASE_URL -s >> .env
+
+echo "Setting Session secret key..."
+echo "SESSION_SECRET_KEY=`python3 -c 'import os; print(os.urandom(64).hex())'`" >> .env

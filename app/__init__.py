@@ -12,8 +12,8 @@ def start_app():
     a.wsgi_app = ProxyFix(a.wsgi_app)
 
     # TODO: what's the difference between these two lines?
-    a.config.from_mapping(SECRET_KEY="dev")
-    a.secret_key = "supersekrit12345"
+    a.config.from_mapping(SECRET_KEY=os.environ.get("SESSION_SECRET_KEY"))
+    a.secret_key = os.environ.get("SESSION_SECRET_KEY")
 
     from . import index
     a.register_blueprint(index.blueprint)

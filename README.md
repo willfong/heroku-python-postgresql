@@ -1,6 +1,8 @@
 # Boilerplate: Heroku / Python / Postgresql
 
-This is a simple, opinionated, framework for quicking turning a concept in your head onto something you can see. This project was started to help make kickstarting new ideas much easier. This is still a work in progress, rushed out to meet other deadlines. As such, comments and suggestions are very much welcomed. 
+This is a simple, opinionated, framework for quickly turning a concept in your head onto something you can see. This project was started to help make kickstarting new ideas much easier. This is still a work in progress, rushed out to meet other deadlines. As such, comments and suggestions are very much welcomed. 
+
+The goal is to put together fast proof of concepts. You will probably want to rewrite the whole application from scratch in a "better" language and framework once you've tested the idea and nailed down the total scope of the project.
 
 ## Getting Started
 
@@ -44,7 +46,7 @@ You can run this as many times as you need
 
 ### Set Up GitHub Authentication
 
-Use GitHub for authentication by creating an app here: <https://github.com/settings/developers>
+GitHub seems to be the easiest OAuth provider to start with. Facebook and Google will probably be more useful, but have a few more steps to get things started. I recommend starting with GitHub, since you probably/should already have an account there: <https://github.com/settings/developers>
 
 Set up two applications, one for production and one for staging. Heroku will use the Production account, and your local development will use the staging account. This is because GitHub OAuth has an authorization callback, which redirects to only one address. Production redirects to Heroku, and Staging will redirect to localhost.
 
@@ -128,7 +130,19 @@ Facebook: https://developers.facebook.com/
 https://developers.facebook.com/apps/{APP_ID}/settings/basic/
 Google: https://console.developers.google.com/apis/dashboard
 http://localhost:5000/google/authorized
+need to enable Google+API
+https://console.developers.google.com/apis/api/plus.googleapis.com/overview?project=<ProjectID>
 
+
+## Production Shortcuts
+
+This framework is not meant for production!
+
+We take shortcuts here, doing things the "quick and dirty" way instead of "proper" for the sake of speed of development. We sacrifice UX/UI because the end-user will generally be alpha testers. The rationale is simple, why spend two hours doing things the right way when the code may be refactored tomorrow?
+
+Here's a list of bad things we've done:
+
+- Database Error Handling - We just fail instead of breaking down the error codes to provide the user with meaningful next steps.
 
 
 ## Reference Documents
