@@ -1,5 +1,7 @@
 # Boilerplate: Heroku / Python / Postgresql
 
+> It's easier to critique than create
+
 This is a simple, opinionated, framework for quickly turning a concept in your head onto something you can see. This project was started to help make kickstarting new ideas much easier. This is still a work in progress, rushed out to meet other deadlines. As such, comments and suggestions are very much welcomed. 
 
 The goal is to put together fast proof of concepts. You will probably want to rewrite the whole application from scratch in a "better" language and framework once you've tested the idea and nailed down the total scope of the project.
@@ -143,7 +145,7 @@ We take shortcuts here, doing things the "quick and dirty" way instead of "prope
 Here's a list of bad things we've done:
 
 - Database Error Handling - We just fail instead of breaking down the error codes to provide the user with meaningful next steps.
-
+- Disable Content Security Policy - https://github.com/GoogleCloudPlatform/flask-talisman#content-security-policy
 
 ## Reference Documents
 
