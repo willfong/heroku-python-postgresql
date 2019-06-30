@@ -13,7 +13,7 @@ def home():
         return redirect(url_for("auth.login"))
     users = db.read("SELECT COUNT(*) AS total FROM users", one=True)
     posts = db.read(
-        "SELECT u.name AS name, u.avatar AS avatar, p.message AS message, p.created AS created FROM posts AS p INNER JOIN users AS u ON p.author_id = u.id ORDER BY p.created DESC LIMIT 20"
+        "SELECT u.name AS name, u.avatar AS avatar, p.message AS message, p.created AS created FROM posts AS p INNER JOIN users AS u ON p.users_id = u.id ORDER BY p.created DESC LIMIT 20"
     )
 
     return render_template(
@@ -26,7 +26,7 @@ def add_post():
     if 'user_id' not in session:
         return redirect(url_for("auth.login"))
     message = request.form.get("message")
-    query = "INSERT INTO posts (author_id, message) VALUES (%s, %s)"
+    query = "INSERT INTO posts (users_id, message) VALUES (%s, %s)"
     params = (session["user_id"], message)
     db.write(query, params)
     flash("Successfully posted message", "success")

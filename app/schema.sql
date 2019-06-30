@@ -16,8 +16,8 @@ CREATE UNIQUE INDEX ON users (facebook_id);
 DROP TABLE IF EXISTS posts CASCADE;
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  author_id INTEGER NOT NULL,
+  users_id INTEGER NOT NULL,
   created TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message TEXT NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES users (id)
+  FOREIGN KEY (users_id) REFERENCES users (id)
 );
