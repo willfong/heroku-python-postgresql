@@ -127,10 +127,20 @@ As usual, be careful when you install packages from PyPI. Verify the package nam
 
 ## OAuth Setup
 
-GitHub: https://github.com/settings/applications/new
-Facebook: https://developers.facebook.com/ 
-https://developers.facebook.com/apps/{APP_ID}/settings/basic/
-Google: https://console.developers.google.com/apis/dashboard
+#### GitHub
+
+https://github.com/settings/applications/new
+
+#### Facebook
+
+https://developers.facebook.com/ 
+
+Create app, add Facebook Login Product
+Valid OAuth Redirect URIs: <url>/facebook/authorized
+
+##### Google
+
+https://console.developers.google.com/apis/dashboard
 http://localhost:5000/google/authorized
 need to enable Google+API
 https://console.developers.google.com/apis/api/plus.googleapis.com/overview?project=<ProjectID>
@@ -146,6 +156,10 @@ Here's a list of bad things we've done:
 
 - Database Error Handling - We just fail instead of breaking down the error codes to provide the user with meaningful next steps.
 - Disable Content Security Policy - https://github.com/GoogleCloudPlatform/flask-talisman#content-security-policy
+
+## Setting Up A New Workstation
+
+
 
 ## Reference Documents
 

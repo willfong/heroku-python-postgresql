@@ -70,7 +70,7 @@ def oauth_google():
     params = (
         oauth_resp.get("id"),
         oauth_resp.get("displayName", "") or "",
-        oauth_resp.get("image", "").get("url") or "",
+        oauth_resp.get("image", "").get("url").replace('/s50/', '/s500/') or "",
     )
     session["user_id"], session["user_name"] = db.write(query, params, returning=True)
     flash("Successfully logged in via Google!", "success")

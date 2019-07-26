@@ -66,7 +66,6 @@ ${CURL_GITHUB} --request POST --data "{\"name\": \"${input_appname}\", \"private
 echo "Creating Heroku App..."
 curl --silent --header "Accept: application/vnd.heroku+json; version=3" --header "Authorization: Bearer ${HEROKU_ACCESS_TOKEN}" --header "Content-Type: application/json" --request POST --data "{\"name\": \"${input_appname}\",\"region\": \"us\",\"stack\": \"heroku-18\"}" https://api.heroku.com/apps
 
-
 echo "Getting Boiler Plate Template..."
 curl -L -o temp_boiler_plate.zip https://github.com/willfong/heroku-python-postgresql/archive/master.zip
 
@@ -82,6 +81,9 @@ echo "Initalizing Git..."
 cd $input_appname
 git init
 git remote add origin git@github.com:$GITHUB_USERNAME/$input_appname.git
+
+echo "Saving App Name..."
+echo ${input_appname} >> .app_name
 
 echo "Setting up local environment file..."
 cp env-sample .env
