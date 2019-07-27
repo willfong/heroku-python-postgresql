@@ -83,11 +83,15 @@ def oauth_facebook():
     assert resp.ok
     oauth_resp = resp.json()
     print("Facebook Response:\n{}".format(oauth_resp))
+    resp = facebook.get("/me/picture?redirect=0&width=1000")
+    fb_photo = resp.json()
+    print("Facebook Photo: {}".format(fb_photo.get('data').get('url')))
     # TODO: Should be checking for errors from DB
-    query = "INSERT INTO users (facebook_id, name, last_login) VALUES (%s, %s, NOW()) ON CONFLICT (facebook_id) DO UPDATE SET last_login = NOW() RETURNING id, name"
+    query = "INSERT INTO users (facebook_id, name, avatar, last_login) VALUES (%s, %s, NOW()) ON CONFLICT (facebook_id) DO UPDATE SET last_login = NOW() RETURNING id, name"
     params = (
         oauth_resp.get("id"),
-        oauth_resp.get("name", "") or ""
+        oauth_resp.get("name", "") or "",
+        fb_photo.get('data').get('url') or ""
     )
     session["user_id"], session["user_name"] = db.write(query, params, returning=True)
     flash("Successfully logged in via Facebook!", "success")
