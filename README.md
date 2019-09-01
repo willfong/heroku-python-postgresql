@@ -159,7 +159,14 @@ Here's a list of bad things we've done:
 
 ## Setting Up A New Workstation
 
-
+- cp env-sample .env
+- python3 -m venv venv
+- . venv/bin/activate
+- pip install -r requirements.txt
+- heroku create <testname>
+- heroku addons:create heroku-postgresql:hobby-dev
+- heroku config:get DATABASE_URL -s >> .env
+- echo "SESSION_SECRET_KEY=`python3 -c 'import os; print(os.urandom(64).hex())'`" >> .env
 
 ## Reference Documents
 
