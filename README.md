@@ -16,6 +16,13 @@ To get started with this boilerplate, you will need to perform the following act
 - Heroku CLI Installed and Logged In: <https://devcenter.heroku.com/articles/heroku-cli>
 - Python 3 with venv module: <https://docs.python.org/3/library/venv.html>
 
+Ubuntu:
+
+- `sudo apt-get install python3-venv`
+- `sudo snap install heroku --classic`
+
+
+
 ### Initial Setup
 
 ```shell
